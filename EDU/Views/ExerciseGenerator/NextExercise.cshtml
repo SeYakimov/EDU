@@ -1,0 +1,36 @@
+﻿
+@{
+	int A = ViewBag.Exercise.A;
+	int B = ViewBag.Exercise.B;
+	int C = ViewBag.Exercise.C;
+	int score = ViewBag.Exercise.Score;
+	int questionNumber = ViewBag.Exercise.QuestionNumber;
+	ViewBag.Title = "Exercise Generator " + score + "/" + questionNumber;
+	int XCounts = ViewBag.Exercise.XCount;
+	double X1 = ViewBag.Exercise.X1;
+	double X2 = ViewBag.Exercise.X2;
+	string equation = ViewBag.Exercise.QuadraticEquation;
+}
+@Styles.Render("~/Content/Site.css")
+
+<div class="f">
+
+	<h1>@ViewBag.Title</h1>
+	<form class="d" method="post" action="/ExerciseGenerator/NextExercise">
+		@*<h2 style="margin: 0">Your result: @score/@questionNumber</h2><br>*@
+		@*<h4 style="margin-bottom: 0;">Solve the quadratic equation</h4>*@<br>
+		<h2 style="margin-top: 0;">@Html.Raw(@equation)</h2><br>
+		<div class="form-group">
+			<input type="text" name="StudentAnswer" required autofocus />
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Next" />
+		</div>
+		<div class="form-group">
+			<input id="blue-grey-button" type="button" value="Finish" style="background-color: #37474f;" onclick="location.href='@Url.Action("FinishExercise", "ExerciseGenerator")'" />
+		</div>
+		@*<p>Корней: @XCounts</p>
+		<p>Корень 1: @X1</p>
+		<p>Корень 2: @X2</p>*@
+	</form>
+</div>

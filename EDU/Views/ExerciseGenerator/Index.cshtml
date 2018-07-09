@@ -1,0 +1,12 @@
+﻿@{
+	ViewBag.Title = "Exercise Generator";
+}
+@Styles.Render("~/Content/Site.css")
+<div class="f">
+	<h1>@ViewBag.Title</h1>
+	<div class="d">
+		<form method="get" action="/ExerciseGenerator/NextExercise">
+			<input type="submit" value="Start" />
+		</form>
+	</div>
+</div>

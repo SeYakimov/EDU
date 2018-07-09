@@ -1,0 +1,14 @@
+﻿@{
+	ViewBag.Title = "Home Page";
+	var roles = ViewBag.Roles;
+}
+@Styles.Render("~/Content/Site.css")
+<div class="f">
+	<h1>Your Role</h1>
+	<div class="d">
+		@foreach (var role in roles)
+		{
+			<h3>@role</h3>
+		}
+	</div>
+</div>

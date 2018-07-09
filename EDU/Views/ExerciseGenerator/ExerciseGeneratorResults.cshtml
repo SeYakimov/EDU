@@ -1,0 +1,37 @@
+﻿
+@{
+	ViewBag.Title = "Exercise Generator Results";
+	var tests = ViewBag.Tests;
+}
+@Styles.Render("~/Content/Site.css")
+<div class="f-wide">
+	<h1>@ViewBag.Title</h1>
+
+	<div class="d">
+		<div class="table-div">
+			<table>
+				<tr>
+					<th>Id</th>
+					<th>Score</th>
+					<th>Result</th>
+					<th>Date</th>
+					<th>Student Email</th>
+				</tr>
+				
+				@foreach (var test in tests)
+				{
+					<tr>
+						<td>@test.Id</td>
+						<td>@test.Score / @test.QuestionsCount</td>
+						<td>@test.Result</td>
+						<td>@test.Date</td>
+						<td>@test.StudentEmail</td>
+					</tr>
+				}
+
+			</table>
+		</div>
+
+	</div>
+</div>
+

@@ -1,0 +1,17 @@
+﻿@using EDU.Models;
+@{
+	ViewBag.Title = "FinishTest";
+	IEnumerable<Answer> studentAnswers = ViewBag.StudentAnswers;
+}
+
+@Styles.Render("~/Content/Site.css")
+<div class="f">
+	<h1>@ViewBag.Title</h1>
+	<div class="d">
+		@foreach (Answer answer in studentAnswers)
+		{
+			<h3>@answer.Text  @answer.isRight? Right:Wrong</h3>
+		}
+	</div>
+</div>
+

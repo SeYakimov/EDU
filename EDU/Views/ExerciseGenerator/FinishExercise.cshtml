@@ -1,0 +1,24 @@
+﻿@{
+	ViewBag.Title = "Result";
+	int score = ViewBag.Exercise.Score;
+	int questionNumber = ViewBag.Exercise.QuestionNumber;
+	int result;
+	if (questionNumber <= 0)
+	{
+		result = 0;
+	}
+	else
+	{
+		result = (int)(Math.Round(score * 1.0 / questionNumber, 2) * 100);
+	}
+}
+@Styles.Render("~/Content/Site.css")
+
+<div class="f">
+
+	<h1>@ViewBag.Title</h1>
+	<form class="d" method="get" action="/ExerciseGenerator/NextExercise">
+		<h1 style="margin: 0; font-size: 130px">@result%</h1><br>
+		<input type="submit" value="Restart"/>
+	</form>
+</div>

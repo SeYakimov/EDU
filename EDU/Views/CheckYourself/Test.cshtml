@@ -1,0 +1,149 @@
+﻿@model List<QA> 
+@using EDU.Models;
+@{
+	//IEnumerable<Question> questions = ViewBag.Questions;
+	//IEnumerable<Answer> answers = ViewBag.Answers;
+	int count = 1, countR = 0;
+}
+@Styles.Render("~/Content/Site.css")
+@Styles.Render("~/Content/css")
+
+<div class="f">
+	<h1>@ViewBag.Title</h1>
+	<div class="d">
+		@if (Model != null && Model.Any())
+		{
+			foreach (QA qa in Model)
+			{
+				<div class="form-group">
+					<span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@qa.question.Id</span>
+					<p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@qa.question.Text</p>
+				</div>
+
+				switch (qa.question.Type)
+				{
+					case 1: // Radio
+						<div class="form-group">
+							<div class="radio-group">
+								@foreach (Answer answer in qa.answers)
+								{
+									if (answer.QuestionId == qa.question.Id)
+									{
+										<input name="@string.Format("{0}{1}", "RadioId", count)" type="hidden", value="@answer.Id">
+										<input id="@string.Format("{0}{1}", "Answer", countR)" name="@string.Format("{0}{1}", "RadioGroup", count)" type="radio" value="@answer.Text" required />
+										<label for="@string.Format("{0}{1}", "Answer", countR)">@answer.Text</label><br>
+									}
+									countR++;
+								}
+								<div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+								</div>
+
+
+							</div>
+						</div>
+						break;
+					case 2: // Input
+						<div class="form-group">
+							<input type="text" id="@string.Format("{0}{1}", "Answer", countR)" name="@string.Format("{0}{1}", "RadioGroup", count)" checked>
+							<div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+							</div>
+						</div>
+						break;
+					case 3: // Checkboxes
+
+						break;
+					case 4: // Later...
+						break;
+					default:
+						break;
+
+				} @*END OF ANSWERS*@
+
+				count++;
+			} @*END OF QUESTION*@
+
+			<span id="countQuections" style="display:none;">@count</span>
+
+			<div class="form-group">
+				<div>
+					<input id="SubmitTest" type="submit" value="Send" />
+				</div>
+			</div>
+		}
+		
+	</div>
+</div>
+@section scripts
+{
+	<script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            $('#SubmitTest').on('click', function () {
+
+                //count Questions
+                var sel = $('#countQuections').text();
+
+                console.log(sel);
+                var studentAnswers = [], countQuestion = parseInt(sel), answer = {}, j = 1;
+
+                for (var i = 1; i < countQuestion; i++) {
+                	answer = {
+                		questionId: $('#ID_Q' + i).text(),
+                		studentAnswer: $('input[name=RadioGroup' + i + ']:checked').val() === undefined ? $('input[name=RadioGroup' + i + ']').val() : $('input[name=RadioGroup' + i + ']:checked').val()
+                	}
+
+                	studentAnswers.push(answer);
+                }
+                $.ajax({
+
+                    type: 'POST',
+                    url: '@Url.Action("Test", "CheckYourself")',
+                	data: { studentAnswers },
+
+                    success: function (response) {
+
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].isCorrect == true)
+                                {
+
+                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Good Answer is <b>' + response.result[i].rightAnswer + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            alert("Something Wrong");
+                        }
+
+
+                        //console.log(response.result.length);
+
+                    },
+                    error: function (response) {
+
+                    }
+                });
+
+                console.log(studentAnswers);
+
+            });
+
+
+
+        });
+
+	</script>
+}
+
+  
+

@@ -1,0 +1,42 @@
+﻿@model EDU.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+@Styles.Render("~/Content/Site.css")
+<div class="f">
+	<h1>@ViewBag.Title</h1>
+	@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "d", role = "form" }))
+	{
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary("", new { @class = "text-danger" })
+		<div class="form-group">
+				@Html.TextBoxFor(m => m.FirstName, new { @placeholder ="firstname" })
+		</div>
+		<div class="form-group">
+				@Html.TextBoxFor(m => m.MiddleName, new { @placeholder = "middlename" })
+		</div>
+		<div class="form-group">
+				@Html.TextBoxFor(m => m.LastName, new { @placeholder = "lastname" })
+		</div>
+		<div class="form-group">
+				@Html.TextBoxFor(m => m.Email, new { @placeholder = "email" })
+		</div>
+		<div class="form-group">
+				@Html.PasswordFor(m => m.Password, new { placeholder = "password" })
+		</div>
+		<div class="form-group">
+				@Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "confirm password" })
+		</div>
+		<div class="form-group">
+			<div class="radio-group">
+				<input id="Role1" name="Role" type="radio" value="teacher" /><label for="Role1">teacher</label><input id="Role2" name="Role" type="radio" value="student" checked=""; /><label for="Role2">student</label>
+			</div>
+		</div>
+		<div class="form-group" >
+				<input type="submit" value="Register" />
+		</div>
+	}
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

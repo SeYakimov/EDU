@@ -1,0 +1,36 @@
+﻿@using EDU.Models
+@{
+	ViewBag.Title = "Results";
+	var results = ViewBag.Results;
+}
+@Styles.Render("~/Content/Site.css")
+
+<div class="f-wide">
+	<h1>@ViewBag.Title</h1>
+
+	<div class="d">
+		<div class="table-div">
+			<table>
+				<tr>
+					<th>Id</th>
+					<th>Student Email</th>
+					<th>Result</th>
+					<th>Date</th>
+				</tr>
+
+				@foreach (var result in results)
+				{
+					<tr>
+						<td>@result.Id</td>
+						<td>@result.StudentEmail</td>
+						<td>@result.Result</td>
+						<td>@result.Date</td>
+					</tr>
+				}
+
+			</table>
+		</div>
+
+	</div>
+</div>
+

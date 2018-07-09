@@ -1,0 +1,20 @@
+﻿@using EDU.Models;
+@{
+	ViewBag.Title = "Check Yourself";
+	IEnumerable<Test> tests = ViewBag.Tests;
+}
+@Styles.Render("~/Content/Site.css")
+
+<div class="f">
+	<h1>@ViewBag.Title</h1>
+	<div class="d">
+		@foreach (var test in tests)
+		{
+			<form method="get" action="/CheckYourself/Test">
+				<input type="hidden" value="@test.Id" name="Id" />
+				<input type="hidden" value="@test.Title" name="Title"/>
+				<input type="submit" value="@test.Title" />
+			</form>
+		}
+	</div>
+</div>
